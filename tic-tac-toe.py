@@ -2,13 +2,17 @@ import sys
 
 class tictac(): 
   def __init__(self):
-    list_board=[["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]]
-    self.list_board=list_board
+    self.list_board=[["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]]
+
 
   def get_error(self):
     print("Error")
     raise SystemExit
 
+  def get_error2(self):
+    print("Error")
+    print("Can't play there, that spot has already been played on")
+    return
 
   def get_board(self):
     a=self.list_board[0][0]
@@ -176,22 +180,37 @@ class tictac():
       print("Player Two WINS")
       raise SystemExit
 
-
-
+    
+y=[]
 g1=tictac()
 g1.get_board()
 counter = 0
 while counter<9:
   play1played=input("Player 1 plays at: ")
-  g1.play1(play1played)
-  g1.get_board()
-  g1.check_board()
-  counter+=1
-  if counter<9:
-    play2played=input("Player 2 plays at: ")
-    g1.play2(play2played)
+  if play1played not in y:
+    y.append(play1played)
+    g1.play1(play1played)
     g1.get_board()
     g1.check_board()
     counter+=1
+  else:
+    g1.get_error2()
+    continue
+
+
+  if counter<9:
+    a=True
+    while a:
+      play2played=input("Player 2 plays at: ")
+      if play2played not in y:
+        y.append(play2played)
+        g1.play2(play2played)
+        g1.get_board()
+        g1.check_board()
+        counter+=1
+      else:
+        g1.get_error2()
+        continue
+      a=False
 
 
